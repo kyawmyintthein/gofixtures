@@ -11,13 +11,10 @@ type User struct{
 }
 
 func TestInitFixture(t *testing.T) {
-    config := Config{
-        Path: "data",
-    }
-    c := SetupConfig(config)
+    SetupConfig("data")
     // fmt.Printf("%v",c)
 
-    if config.Path != c.Path{
+    if config.Path != "data"{
          t.Errorf("failed to setup config")
     }
 }

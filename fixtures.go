@@ -51,6 +51,7 @@ func (fixture Fixture) Load(name string, result interface{}) error{
 	return err
 }
 
+
 //load fixture with name
 func LoadFixture(name string) (Fixture, error) {
 	var (
@@ -84,10 +85,8 @@ func loadFixtureFile(path string) ([]byte, error) {
 }
 
 // Init fixtures
-func SetupConfig(c Config) *Config{
-	// fmt.Printf("%+v",c)
-	config.Path = c.Path
-	return config
+func SetupConfig(path string){
+	config.Path = path
 }
 
 func init(){
