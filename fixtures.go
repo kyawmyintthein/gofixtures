@@ -33,45 +33,23 @@ func (fixture Fixture) Load(name string, result interface{}) error{
 	for k, v := range content[name] {
 		field := strings.ToUpper(k[:1]) + k[1:]
 		val := t.FieldByName(field)
-		val.Set(reflect.ValueOf(v))
+		// fmt.Println(val.Kind().String())
+		switch val.Kind().String(){
+		case "string":
+			val.Set(reflect.ValueOf(v))
+		case "int64":
+			i := v.(int)
+			val.Set(reflect.ValueOf(int64(i)))
+		case "int32":
+			i := v.(int)
+			val.Set(reflect.ValueOf(int32(i)))
+		default:
+			val.Set(reflect.ValueOf(v))
+		}
+		
 	}
 	return err
 }
-
-
-
-// func FieldByNameOrTag(v reflect.Value, name string) (ret reflect.Value) {
-// 	defer func() { fmt.Println(v, name, ret) }()
-// 	field := strings.ToUpper(name[:1]) + name[1:]
-// 	ret = v.FieldByName(field)
-// 	if ret.IsValid() {
-// 		if ret.Kind() == reflect.Ptr {
-// 			if ret.Elem().IsNil() {
-// 				ret.Set(reflect.New(ret.Type().Elem()))
-// 			}
-// 			ret = ret.Elem()
-// 			return
-// 		}
-// 		return
-// 	}
-
-// 	t := v.Type()
-// 	for i, n := 0, t.NumField(); i < n; i++ {
-// 		f := t.Field(i)
-// 		if name == f.Tag.Get("yaml") {
-// 			ret = v.Field(i)
-// 			if ret.Kind() == reflect.Ptr {
-// 				if ret.Elem().IsNil() {
-// 					ret.Set(reflect.New(ret.Type().Elem()))
-// 				}
-// 				ret = ret.Elem()
-// 				return
-// 			}
-// 			return
-// 		}
-// 	}
-// 	return
-// }
 
 //load fixture with name
 func LoadFixture(name string) (Fixture, error) {

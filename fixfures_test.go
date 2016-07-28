@@ -7,7 +7,7 @@ import(
 
 type User struct{
     Name string  `yaml:"name"`
-    Age  int  `yaml:"age"`
+    Age  int64  `yaml:"age"`
 }
 
 func TestInitFixture(t *testing.T) {
